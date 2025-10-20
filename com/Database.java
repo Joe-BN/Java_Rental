@@ -43,7 +43,6 @@ public class Database {
                 return model+"s are not there \t Sorry";
             }
             float cost = getRates(model)*days;
-            System.out.println(cost);
             if (cost == 0) {
                 return "Something went wrong when geting the  daily rate";            
             }
@@ -69,21 +68,17 @@ public class Database {
     // reteruning car
     public String returnVehicle(String email, String model){
         if (emailExistsinOrders(email)){
-           String sql = "DELETE FROM orders WHERE customer = ?";
+            String sql = "DELETE FROM orders WHERE customer = ? AND vehicle = ?";
             try (Connection conn = connect();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, email);
+                pstmt.setString(2, model);
                 pstmt.executeUpdate();
-                boolean done = increaseAvailability(model);
-                if (done) {
-                    return "\nDeleted "+ email +"'s : "+model+" Order record cleared";
-                } else {
-                    return "\nUnable to update "+ email +"'s Rental, Try again";
-                }
-                
+                increaseAvailability(model);
+                return "\nCleared "+email+"'s : "+model+" Order record cleared";                
             } catch (SQLException e) {
                 //e.printStackTrace();
-                return " \nMissing record \n";
+                return " \n Missing record (check email or model)\n";
             } 
         } else {
             return " \n Record does not exist \n";
@@ -180,19 +175,16 @@ public class Database {
         }
     }
     // update available after return
-    private boolean increaseAvailability(String model) {
+    private void increaseAvailability(String model) {
         String sql = "UPDATE vehicles SET available = available + 1 WHERE model = ?";
 
         try (Connection conn = connect();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, model);
-            int affected = pstmt.executeUpdate();
-            return affected == 1;
+            pstmt.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
         }
     }
 

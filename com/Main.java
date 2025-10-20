@@ -60,6 +60,7 @@ public class Main {
                         brand = sc.nextLine();
                         System.out.print("Enter EXACT vehicle model (Corolla, Civic, Axela, Sunny): ");
                         model = sc.nextLine();
+                        model = db.formatString(model);
                         System.out.print("Enter number of seats needed; (1, 2, 3, 4, 5): ");
                         int seats = sc.nextInt();
                         sc.nextLine(); // clear leftover newline
@@ -88,6 +89,7 @@ public class Main {
                         brand = sc.nextLine();
                         System.out.print("Enter EXACT bike model ;(Caravan,Hiace,Bongo,H1): ");
                         model = sc.nextLine();
+                        model = db.formatString(model);
                         System.out.print("Enter expected carrying capacity: (1 < X < 200) quibic metres: ");
                         int cap = sc.nextInt();
                         sc.nextLine();
@@ -108,7 +110,6 @@ public class Main {
                     System.out.print("Enter number of days for rent: ");
                     int days = sc.nextInt();
                     
-                    model = db.formatString(model);
                     
                     String msg = db.placeOrder(category, brand, model,email, days);
                     System.out.println("\n"+msg);

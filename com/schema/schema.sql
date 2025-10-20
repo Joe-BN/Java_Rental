@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS orders (
 INSERT INTO vehicles (type, brand, model, seats, rate, available) VALUES
 ('Car', 'Toyota', 'Corolla', 5, 4500.00, 10),
 ('Car', 'Honda', 'Civic', 5, 4800.00, 10),
-('Car', 'Mazda', 'Axela', 5, 4300.00, 10),
+('Car', 'Mazda', 'Axela', 5, 4300.00, 9),
 ('Car', 'Nissan', 'Sunny', 5, 4000.00, 10);
 
 -- for vans
@@ -42,4 +42,9 @@ INSERT INTO vehicles (type, brand, model, category, rate, available) VALUES
 ('Bike', 'Yamaha', 'YBR125', 'Standard', 1500.00, 10),
 ('Bike', 'Honda', 'CB125F', 'Commuter', 1600.00, 10),
 ('Bike', 'Suzuki', 'GSX150', 'Sport', 2000.00, 10),
-('Bike', 'Bajaj', 'Boxer150', 'Utility', 1300.00, 10);
+('Bike', 'Bajaj', 'Boxer150', 'Utility', 1300.00, 9);
+
+
+INSERT INTO orders (customer, vehicle, cost) VALUES
+('user1@user', 'Boxer150', 6900.00),
+('user2@user', 'Axela', 21500.00);
